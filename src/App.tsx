@@ -1,10 +1,15 @@
 import React from 'react';
 
-import { View, StyleSheet } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
 
-import { Store } from '@/redux';
+import { MovieListScreen } from '@/screens';
+import { Store } from '@/state';
+
+const Stack = createNativeStackNavigator();
 
 const App = (): JSX.Element => {
 	return (
@@ -13,7 +18,19 @@ const App = (): JSX.Element => {
 			style={styles.container}
 		>
 			<Provider store={Store}>
-				<View></View>
+				<NavigationContainer>
+					<Stack.Navigator
+						screenOptions={{
+							headerShown: false,
+						}}
+						initialRouteName='MovieList'
+					>
+						<Stack.Screen
+							name='MovieList'
+							component={MovieListScreen}
+						/>
+					</Stack.Navigator>
+				</NavigationContainer>
 			</Provider>
 		</SafeAreaView>
 	);
