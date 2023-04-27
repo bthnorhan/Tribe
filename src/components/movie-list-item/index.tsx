@@ -4,12 +4,12 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import { Rate } from '../rate';
 import { Constants } from '@/constants';
-import { MovieType } from '@/types';
+import { ShortMovieType } from '@/types';
 import { getFontFamily } from '@/utils';
 
 interface MovieListItemProps {
-	movie: MovieType;
-	onPress: (movie: MovieType) => void;
+	movie: ShortMovieType;
+	onPress: (movie: ShortMovieType) => void;
 }
 
 export const MovieListItem = ({ movie, onPress }: MovieListItemProps) => {

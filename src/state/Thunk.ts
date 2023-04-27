@@ -8,6 +8,7 @@ import {
 	MovieDetailType,
 	MovieRequestParamType,
 	PaginationType,
+	SortType,
 } from '@/types';
 
 export const discoverMovies = createAsyncThunk<
@@ -22,7 +23,7 @@ export const discoverMovies = createAsyncThunk<
 				params: {
 					api_key: Constants.API_KEY,
 					language: 'en-US',
-					sort_by: sort,
+					sort_by: `${sort}.${SortType.DESC}`,
 					include_adult: false,
 					include_video: false,
 					with_watch_monetization_types: 'flatrate',

@@ -25,8 +25,8 @@ import {
 import {
 	MovieListProps,
 	MovieSortType,
-	MovieType,
 	RootStateType,
+	ShortMovieType,
 } from '@/types';
 
 export const MovieListScreen = () => {
@@ -79,10 +79,9 @@ export const MovieListScreen = () => {
 		setSelectedSort(sortType);
 	};
 
-	const onMovieClick = (movie: MovieType) => {
-		const { id, overview, poster_path, title, vote_average } = movie;
+	const onMovieClick = (movie: ShortMovieType) => {
 		navigation.navigate('MovieDetail', {
-			selectedMovie: { id, overview, poster_path, title, vote_average },
+			selectedMovie: movie,
 		});
 	};
 

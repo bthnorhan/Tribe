@@ -75,8 +75,8 @@ export type MovieDataType = {
 };
 
 export enum MovieSortType {
-	POPULARITY = 'popularity.desc',
-	VOTE = 'vote_average.desc',
+	POPULARITY = 'popularity',
+	VOTE = 'vote_average',
 }
 
 export type MovieRequestParamType = {
