@@ -14,16 +14,21 @@ import { shallowEqual, useSelector } from 'react-redux';
 import { RootStateType } from '../../types/Store';
 import { Back, Heart, HeartFilled, Rate, Screen } from '@/components';
 import { Constants } from '@/constants';
-import { getMovieCrew, getMovieDetail, useAppDispatch } from '@/state';
+import {
+	getMovieCrew,
+	getMovieDetail,
+	toggleFavoriteMovie,
+	useAppDispatch,
+} from '@/state';
 import { MovieDetailProps } from '@/types';
-import { getFontFamily } from '@/utils';
+import { getFontFamily, isArrayIncludeKeyValue } from '@/utils';
 
 export const MovieDetailScreen = () => {
 	const navigation = useNavigation<MovieDetailProps['navigation']>();
 	const route = useRoute<MovieDetailProps['route']>();
 
 	const dispatch = useAppDispatch();
-	const { movie, credits, loading } = useSelector(
+	const { favoriteMovies, movie, credits, loading } = useSelector(
 		(state: RootStateType) => state.movie,
 		shallowEqual,
 	);
@@ -48,33 +53,30 @@ export const MovieDetailScreen = () => {
 
 	const [isFavorite, setIsFavorite] = useState(false);
 
-	const LeftComponent = () => {
-		return (
-			<TouchableOpacity onPress={navigation.goBack}>
-				<Back />
-			</TouchableOpacity>
-		);
+	const toggleFavorite = () => {
+		dispatch(toggleFavoriteMovie(route.params.selectedMovie));
+		setIsFavorite(p => !p);
 	};
 
-	const RightComponent = () => {
-		return (
-			<TouchableOpacity>
-				{isFavorite ? <HeartFilled /> : <Heart />}
-			</TouchableOpacity>
-		);
-	};
+	const LeftComponent = () => (
+		<TouchableOpacity onPress={navigation.goBack}>
+			<Back />
+		</TouchableOpacity>
+	);
+
+	const RightComponent = () => (
+		<TouchableOpacity onPress={toggleFavorite}>
+			{isFavorite ? <HeartFilled /> : <Heart />}
+		</TouchableOpacity>
+	);
 
 	useEffect(() => {
-		dispatch(
-			getMovieDetail({
-				id: route.params.id,
-			}),
-		);
-		dispatch(
-			getMovieCrew({
-				id: route.params.id,
-			}),
-		);
+		const param = {
+			id: route.params.selectedMovie.id,
+		};
+		dispatch(getMovieDetail(param));
+		dispatch(getMovieCrew(param));
+		setIsFavorite(isArrayIncludeKeyValue(favoriteMovies, 'id', param.id));
 	}, []);
 
 	if (loading || !movie || !credits) {
@@ -88,7 +90,9 @@ export const MovieDetailScreen = () => {
 			useScrollView={true}
 		>
 			<Image
-				source={{ uri: Constants.IMAGE_URL + movie?.poster_path }}
+				source={{
+					uri: Constants.IMAGE_URL + movie.poster_path,
+				}}
 				style={styles.image}
 			/>
 			<Text style={styles.title}>{movie?.title}</Text>

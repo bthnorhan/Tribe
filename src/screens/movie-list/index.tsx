@@ -80,8 +80,9 @@ export const MovieListScreen = () => {
 	};
 
 	const onMovieClick = (movie: MovieType) => {
+		const { id, overview, poster_path, title, vote_average } = movie;
 		navigation.navigate('MovieDetail', {
-			id: movie.id,
+			selectedMovie: { id, overview, poster_path, title, vote_average },
 		});
 	};
 

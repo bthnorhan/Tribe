@@ -1,9 +1,11 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
+import { ShortMovieType } from './Movie';
+
 export type RootStackParamList = {
 	MovieList: undefined;
 	FavoriteMovies: undefined;
-	MovieDetail: { id: number };
+	MovieDetail: { selectedMovie: ShortMovieType };
 };
 
 export type MovieListProps = NativeStackScreenProps<

@@ -1,4 +1,5 @@
 import { createSlice, isFulfilled } from '@reduxjs/toolkit';
+import _ from 'lodash';
 
 import {
 	discoverMovies,
@@ -11,6 +12,7 @@ import type {
 	MovieType,
 	MovieDetailType,
 	MovieCreditsType,
+	ShortMovieType,
 } from '@/types';
 import { isPendingAction, isRejectedAction } from '@/utils';
 
@@ -18,7 +20,7 @@ export interface MovieState {
 	movies: Array<MovieType>;
 	movie: MovieDetailType | undefined;
 	credits: MovieCreditsType | undefined;
-	favoriteMovies: Array<MovieType>;
+	favoriteMovies: Array<ShortMovieType>;
 	pagination: PaginationType | undefined;
 	loading: boolean;
 	error: boolean;
@@ -45,6 +47,13 @@ export const movieSlice = createSlice({
 			state.pagination = undefined;
 			state.loading = false;
 			state.error = false;
+		},
+		toggleFavoriteMovie: (state, action) => {
+			state.favoriteMovies = _.xorBy(
+				state.favoriteMovies,
+				[action.payload],
+				'id',
+			);
 		},
 	},
 	extraReducers: builder => {
@@ -80,6 +89,6 @@ export const movieSlice = createSlice({
 	},
 });
 
-export const { clearMovieSlice } = movieSlice.actions;
+export const { clearMovieSlice, toggleFavoriteMovie } = movieSlice.actions;
 
 export default movieSlice.reducer;
