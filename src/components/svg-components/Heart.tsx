@@ -1,16 +1,8 @@
 import Svg, { Path } from 'react-native-svg';
 
-interface HeartProps {
-	onPress?: () => void;
-}
-
-export const Heart = ({ onPress }: HeartProps) => {
-	const onPressHandler = () => {
-		onPress && onPress();
-	};
-
+export const Heart = () => {
 	return (
-		<Svg width={20} height={20} fill='none' onPress={onPressHandler}>
+		<Svg width={20} height={20} fill='none'>
 			<Path
 				stroke='#000'
 				strokeLinecap='round'

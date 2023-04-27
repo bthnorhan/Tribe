@@ -1,4 +1,5 @@
 export * from './Heart';
+export * from './HeartFilled';
 export * from './Back';
 export * from './MagnifyingGlass';
 export * from './Sort';

@@ -1,16 +1,17 @@
 import React, { memo } from 'react';
 
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, ViewStyle } from 'react-native';
 
 import { Star, StarFilled } from '../svg-components';
 
 interface RateProps {
 	rate?: number;
+	containerStyle?: ViewStyle;
 }
 
-export const Rate = memo(({ rate = 0 }: RateProps) => {
+export const Rate = memo(({ rate = 0, containerStyle }: RateProps) => {
 	return (
-		<View style={styles.container}>
+		<View style={StyleSheet.flatten([styles.container, containerStyle])}>
 			{Array.from(new Array(5)).map((_, index) =>
 				index + 1 <= rate ? (
 					<StarFilled key={index} />

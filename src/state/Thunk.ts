@@ -2,7 +2,13 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import api from '@/api';
 import { Constants } from '@/constants';
-import { MovieDataType, MovieRequestParamType, PaginationType } from '@/types';
+import {
+	MovieCreditsType,
+	MovieDataType,
+	MovieDetailType,
+	MovieRequestParamType,
+	PaginationType,
+} from '@/types';
 
 export const discoverMovies = createAsyncThunk<
 	MovieDataType & PaginationType,
@@ -46,6 +52,34 @@ export const searchMovie = createAsyncThunk<
 			},
 		},
 	);
+
+	return response.data;
+});
+
+export const getMovieDetail = createAsyncThunk<
+	MovieDetailType,
+	MovieRequestParamType
+>('movies/detail', async ({ id }: MovieRequestParamType) => {
+	const response = await api.get<MovieDetailType>(`/movie/${id}`, {
+		params: {
+			api_key: Constants.API_KEY,
+			language: 'en-US',
+		},
+	});
+
+	return response.data;
+});
+
+export const getMovieCrew = createAsyncThunk<
+	MovieCreditsType,
+	MovieRequestParamType
+>('movies/crew', async ({ id }: MovieRequestParamType) => {
+	const response = await api.get<MovieCreditsType>(`/movie/${id}/credits`, {
+		params: {
+			api_key: Constants.API_KEY,
+			language: 'en-US',
+		},
+	});
 
 	return response.data;
 });

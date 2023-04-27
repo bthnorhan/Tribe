@@ -22,7 +22,9 @@ export const NavigationBar = ({
 				{!!leftComponent && leftComponent}
 				<Text style={styles.title}>{title}</Text>
 			</View>
-			<View>{!!rightComponent && rightComponent}</View>
+			<View style={styles.rightContainer}>
+				{!!rightComponent && rightComponent}
+			</View>
 		</View>
 	);
 };
@@ -40,11 +42,13 @@ const styles = StyleSheet.create({
 	leftContainer: {
 		flex: 1,
 		flexDirection: 'row',
+		alignItems: 'center',
 		gap: 16,
 	},
 	rightContainer: {
 		flex: 1,
 		maxWidth: 165,
+		alignItems: 'flex-end',
 	},
 	title: {
 		fontFamily: getFontFamily(600),

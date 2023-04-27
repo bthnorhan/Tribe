@@ -1,16 +1,8 @@
 import Svg, { Path } from 'react-native-svg';
 
-interface BackProps {
-	onPress?: () => void;
-}
-
-export const Back = ({ onPress }: BackProps) => {
-	const onPressHandler = () => {
-		onPress && onPress();
-	};
-
+export const Back = () => {
 	return (
-		<Svg width={8} height={14} fill='none' onPress={onPressHandler}>
+		<Svg width={8} height={14} fill='none'>
 			<Path
 				stroke='#000'
 				strokeLinecap='round'

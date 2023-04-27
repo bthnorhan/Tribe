@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useMemo } from 'react';
+import React, { PropsWithChildren, ReactElement, useMemo } from 'react';
 
 import { ScrollView, StyleSheet, View } from 'react-native';
 
@@ -7,8 +7,8 @@ import { Constants } from '@/constants';
 
 interface ScreenProps extends PropsWithChildren {
 	title?: string;
-	rightComponent?: JSX.Element;
-	leftComponent?: JSX.Element;
+	rightComponent?: JSX.Element | ReactElement;
+	leftComponent?: JSX.Element | ReactElement;
 	useScrollView?: boolean;
 }
 

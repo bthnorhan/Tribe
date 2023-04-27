@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
 import { useNavigation } from '@react-navigation/native';
-import { FlatList, StyleSheet, View } from 'react-native';
-import { useSelector } from 'react-redux';
+import { ActivityIndicator, FlatList, StyleSheet, View } from 'react-native';
+import { shallowEqual, useSelector } from 'react-redux';
 
 import {
 	Button,
@@ -35,6 +35,7 @@ export const MovieListScreen = () => {
 	const dispatch = useAppDispatch();
 	const { movies, pagination, loading } = useSelector(
 		(state: RootStateType) => state.movie,
+		shallowEqual,
 	);
 
 	const [selectedSort, setSelectedSort] = useState(MovieSortType.POPULARITY);
@@ -43,12 +44,11 @@ export const MovieListScreen = () => {
 
 	useEffect(() => {
 		dispatch(clearMovieSlice());
-		const params = { sort: selectedSort, query: debouncedQuery };
 
 		dispatch(
 			debouncedQuery.trim().length > 0
-				? searchMovie(params)
-				: discoverMovies(params),
+				? searchMovie({ query: debouncedQuery })
+				: discoverMovies({ sort: selectedSort }),
 		);
 	}, [selectedSort, debouncedQuery]);
 
@@ -102,18 +102,22 @@ export const MovieListScreen = () => {
 				value={query}
 				onChangeText={setQuery}
 			/>
-			<View style={styles.buttonContainer}>
-				<Button
-					title='Sort by Popularity'
-					leftIcon={<Sort />}
-					onPress={sort(MovieSortType.POPULARITY)}
-				/>
-				<Button
-					title='Sort by Rating'
-					leftIcon={<Spark />}
-					onPress={sort(MovieSortType.VOTE)}
-				/>
-			</View>
+			{debouncedQuery.trim().length > 0 ? null : (
+				<>
+					<View style={styles.buttonContainer}>
+						<Button
+							title='Sort by Popularity'
+							leftIcon={<Sort />}
+							onPress={sort(MovieSortType.POPULARITY)}
+						/>
+						<Button
+							title='Sort by Rating'
+							leftIcon={<Spark />}
+							onPress={sort(MovieSortType.VOTE)}
+						/>
+					</View>
+				</>
+			)}
 			<FlatList
 				data={movies}
 				keyExtractor={item => item.id.toString()}
@@ -124,6 +128,9 @@ export const MovieListScreen = () => {
 				ItemSeparatorComponent={Seperator}
 				onEndReachedThreshold={0.2}
 				onEndReached={nextPage}
+				ListFooterComponent={
+					loading ? <ActivityIndicator size='large' /> : null
+				}
 			/>
 		</Screen>
 	);
