@@ -1,5 +1,3 @@
-import { PaginationType } from '.';
-
 export type MovieType = {
 	adult: boolean;
 	backdrop_path: string;
@@ -21,6 +19,13 @@ export type MovieDataType = {
 	results: Array<MovieType>;
 };
 
-export type MovieResponseType = {
-	data: (MovieDataType & PaginationType) | undefined;
+export enum MovieSortType {
+	POPULARITY = 'popularity.desc',
+	VOTE = 'vote_average.desc',
+}
+
+export type MovieRequestParamType = {
+	page?: number;
+	sort?: string;
+	query?: string;
 };
