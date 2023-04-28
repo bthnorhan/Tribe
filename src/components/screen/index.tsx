@@ -1,6 +1,12 @@
 import React, { PropsWithChildren, ReactElement, useMemo } from 'react';
 
-import { ScrollView, StyleSheet, View } from 'react-native';
+import {
+	Platform,
+	ScrollView,
+	StyleSheet,
+	View,
+	ViewStyle,
+} from 'react-native';
 
 import { NavigationBar } from '@/components';
 import { Constants } from '@/constants';
@@ -24,8 +30,13 @@ export const Screen = ({
 		[useScrollView],
 	);
 
+	const extraStyle = useMemo(
+		() => ({ paddingTop: Platform.OS === 'ios' ? 20 : 0 }),
+		[Platform.OS],
+	) as ViewStyle;
+
 	return (
-		<View style={styles.container}>
+		<View style={StyleSheet.create([styles.container, extraStyle])}>
 			<NavigationBar
 				title={title}
 				rightComponent={rightComponent}

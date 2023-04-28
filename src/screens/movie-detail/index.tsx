@@ -80,7 +80,11 @@ export const MovieDetailScreen = () => {
 	}, []);
 
 	if (loading || !movie || !credits) {
-		return <ActivityIndicator size='large' />;
+		return (
+			<View style={styles.loading}>
+				<ActivityIndicator size='large' />
+			</View>
+		);
 	}
 
 	return (
@@ -160,5 +164,11 @@ const styles = StyleSheet.create({
 	},
 	descriptionTitle: {
 		fontFamily: getFontFamily(600),
+	},
+	loading: {
+		flex: 1,
+		justifyContent: 'center',
+		alignSelf: 'center',
+		alignItems: 'center',
 	},
 });
