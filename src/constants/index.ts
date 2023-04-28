@@ -6,7 +6,6 @@ export const Constants: ConstantsType = {
 	IMAGE_URL: 'https://image.tmdb.org/t/p/w500/',
 
 	Colors: {
-		black: '#000000',
 		white: '#FFFFFF',
 
 		primaryText: '#000000',

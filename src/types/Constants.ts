@@ -3,7 +3,11 @@ export type ConstantsType = {
 	API_KEY: string;
 	IMAGE_URL: string;
 	Colors: {
-		[key: string]: string;
+		white: string;
+		primaryText: string;
+		secondaryText: string;
+		componentBackground: string;
+		placeholderColor: string;
 	};
 	FontFamilies: {
 		[key: number]: string;

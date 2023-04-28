@@ -3,20 +3,25 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import api from '@/api';
 import { Constants } from '@/constants';
 import {
+	DiscoverMoviesRequestParamType,
 	MovieCreditsType,
 	MovieDataType,
 	MovieDetailType,
-	MovieRequestParamType,
+	MovieInformationRequestType,
 	PaginationType,
+	SearchMovieRequestParamType,
 	SortType,
 } from '@/types';
 
 export const discoverMovies = createAsyncThunk<
 	MovieDataType & PaginationType,
-	MovieRequestParamType
+	DiscoverMoviesRequestParamType
 >(
 	'movies/discover',
-	async ({ page = 1, sort = 'popularity' }: MovieRequestParamType) => {
+	async ({
+		page = 1,
+		sort = 'popularity',
+	}: DiscoverMoviesRequestParamType) => {
 		const response = await api.get<MovieDataType & PaginationType>(
 			'discover/movie',
 			{
@@ -39,8 +44,8 @@ export const discoverMovies = createAsyncThunk<
 
 export const searchMovie = createAsyncThunk<
 	MovieDataType & PaginationType,
-	MovieRequestParamType
->('movies/search', async ({ page = 1, query }: MovieRequestParamType) => {
+	SearchMovieRequestParamType
+>('movies/search', async ({ page = 1, query }: SearchMovieRequestParamType) => {
 	const response = await api.get<MovieDataType & PaginationType>(
 		'/search/movie',
 		{
@@ -59,8 +64,8 @@ export const searchMovie = createAsyncThunk<
 
 export const getMovieDetail = createAsyncThunk<
 	MovieDetailType,
-	MovieRequestParamType
->('movies/detail', async ({ id }: MovieRequestParamType) => {
+	MovieInformationRequestType
+>('movies/detail', async ({ id }: MovieInformationRequestType) => {
 	const response = await api.get<MovieDetailType>(`/movie/${id}`, {
 		params: {
 			api_key: Constants.API_KEY,
@@ -73,8 +78,8 @@ export const getMovieDetail = createAsyncThunk<
 
 export const getMovieCrew = createAsyncThunk<
 	MovieCreditsType,
-	MovieRequestParamType
->('movies/crew', async ({ id }: MovieRequestParamType) => {
+	MovieInformationRequestType
+>('movies/crew', async ({ id }: MovieInformationRequestType) => {
 	const response = await api.get<MovieCreditsType>(`/movie/${id}/credits`, {
 		params: {
 			api_key: Constants.API_KEY,

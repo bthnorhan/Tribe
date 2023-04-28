@@ -79,10 +79,17 @@ export enum MovieSortType {
 	VOTE = 'vote_average',
 }
 
-export type MovieRequestParamType = {
+export type DiscoverMoviesRequestParamType = {
 	page?: number;
 	sort?: string;
+};
+
+export type SearchMovieRequestParamType = {
+	page?: number;
 	query?: string;
+};
+
+export type MovieInformationRequestType = {
 	id?: number;
 };
 

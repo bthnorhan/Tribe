@@ -62,16 +62,21 @@ export const MovieListScreen = () => {
 			pagination.page < pagination.total_pages &&
 			!loading
 		) {
-			const params = {
-				page: pagination.page + 1,
-				sort: selectedSort,
-				query: debouncedQuery,
-			};
-			dispatch(
-				debouncedQuery.trim().length > 0
-					? searchMovie(params)
-					: discoverMovies(params),
-			);
+			if (debouncedQuery.trim().length > 0) {
+				dispatch(
+					searchMovie({
+						page: pagination.page + 1,
+						query: debouncedQuery,
+					}),
+				);
+			} else {
+				dispatch(
+					discoverMovies({
+						page: pagination.page + 1,
+						sort: selectedSort,
+					}),
+				);
+			}
 		}
 	};
 
